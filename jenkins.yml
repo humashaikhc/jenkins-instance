@@ -1,0 +1,42 @@
+---
+- hosts: jenkins
+  become: yes
+  remote_user: ubuntu
+  become_user: root
+  become_method: sudo
+  tasks:
+  - name: import a key file from jenkins-ci
+    apt_key: 
+      url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
+      state: present
+
+  - name: add the jenkins repo
+    apt_repository:
+      url: https://pkg.jenkins.io/debian-stable/jenkins.repo
+      state: present
+      
+  - name: apt get-update
+    apt:
+      update_cache: true
+      cache_valid_time: 3600
+      force_apt_get: true
+
+  - name: Install java
+    apt:
+      name: java-11-openjdk-devel
+      state: present
+
+  - name: Install jenkins
+    apt:
+      name: jenkins
+      state: latest
+      update_cache: yes
+
+  - name: daemon-reload to pick up config changes
+    ansible.builtin.systemd:
+      daemon_reload: yes
+
+  - name: Start jenkins
+    ansible.builtin.systemd:
+      name: jenkins
+      state: started
