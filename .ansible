@@ -1,0 +1,10 @@
+#!/bin/bash
+echo ------------update instance-----------
+sudo apt update 
+sudo apt-add-repository -y ppa:ansible/ansible
+
+echo ------------install ansible-----------
+sudo apt-get -y install ansible
+
+echo------------check version--------------
+ansible --version
