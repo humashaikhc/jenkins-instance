@@ -10,21 +10,15 @@
       url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
       state: present
 
-  - name: add the jenkins repo
-    apt_repository:
-      url: https://pkg.jenkins.io/debian-stable/jenkins.repo
-      state: present
-      
+ - name: ensure the repository is configured
+      apt_repository: repo='deb https://pkg.jenkins.io/debian-stable binary/' state=present
+      become: yes
+
   - name: apt get-update
     apt:
       update_cache: true
       cache_valid_time: 3600
       force_apt_get: true
-
-  - name: Install java
-    apt:
-      name: java-11-openjdk-devel
-      state: present
 
   - name: Install jenkins
     apt:
