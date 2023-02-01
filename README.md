@@ -28,3 +28,5 @@ ansible playbook -v jenkins.yml -i inventory.txt
 Shows the ansible playbook successful and the jenkins dashboard showing when the public ip address of the jenkinshost EC2 instance is used in the url
 
 >jenkinshosturl:8080. 
+
+![](second-recording.gif)
